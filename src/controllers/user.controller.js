@@ -7,14 +7,14 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const registerUSer = asyncHandler( async (req, res) => {
     
     const {username, email, fullname, password} = req.body
-    console.log("Email:", email, password);
+    
     if(
         [username, email, fullname, password].some((field) => field?.trim() === "")
     ){
         throw new ApiError(400, "All fields are required")
     }
 
-    const existingUser = User.findOne({
+    const existingUser =await User.findOne({
     
         $or: [{email},{username}]
     }
